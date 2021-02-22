@@ -1,4 +1,4 @@
-module TrelloToad
+module TrelloTribbles
 
 go 1.14
 

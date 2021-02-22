@@ -7,10 +7,23 @@ import (
 	"sort"
 )
 
-var trelloAPI = NewTrelloClient(http.DefaultClient, "apiKey", "apiToken")
+var trelloAPI *Trello
 
 func main() {
-	lists, err := trelloAPI.getBoardLists("boardId")
+	apiKey := os.Getenv("TRELLO_API_KEY")
+	if len(apiKey) < 1 {
+		log.Fatal("TRELLO_API_KEY is required")
+	}
+
+	apiToken := os.Getenv("TRELLO_API_TOKEN")
+	if len(apiKey) < 1 {
+		log.Fatal("TRELLO_API_TOKEN is required")
+	}
+
+	trelloAPI = NewTrelloClient(http.DefaultClient, apiKey, apiToken)
+
+	boardId := os.Getenv("TRELLO_BOARD_ID")
+	lists, err := trelloAPI.getBoardLists(boardId)
 	if err != nil {
 		os.Exit(1)
 	}
@@ -19,7 +32,7 @@ func main() {
 
 func sortLists(lists []List) {
 	for _, l := range lists {
-		Cards, err :=trelloAPI.getListCards(l.Id)
+		Cards, err := trelloAPI.getListCards(l.Id)
 		if err != nil {
 			log.Printf("failed to get cards for list: %v", l.Id)
 			break
@@ -31,13 +44,19 @@ func sortLists(lists []List) {
 
 func sortCards(cards []Card) {
 	sort.Slice(cards, func(i, j int) bool {
+		if len(cards[i].IdMembers) > len(cards[j].IdMembers) {
+			return true
+		}
 		return false
 	})
 }
 
 func updateCards(cards []Card) {
 	for i, c := range cards {
-		trelloAPI.updateCardPosition(c.Id, i)
+		err := trelloAPI.updateCardPosition(c.Id, 1<<i)
+		if err != nil {
+			log.Printf("failed to update card: %v\n", err)
+			return
+		}
 	}
 }
-
