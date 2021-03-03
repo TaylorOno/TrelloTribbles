@@ -1,0 +1,20 @@
+{
+  "version": "2.0",
+  "extensionBundle": {
+    "id": "Microsoft.Azure.Functions.ExtensionBundle",
+    "version": "[1.*, 2.0.0)"
+  },
+  "customHandler": {
+    "description": {
+      "defaultExecutablePath": "go_board_sorter",
+      "workingDirectory": "",
+      "arguments": []
+    },
+    "enableForwardingHttpRequest": true
+  },
+  "logging": {
+    "logLevel": {
+      "default": "Trace"
+    }
+  }
+}
