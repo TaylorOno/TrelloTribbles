@@ -57,7 +57,7 @@ func (b *BoardSorter) sortCards(cards []Card) {
 }
 
 //updateCards updates a cards position to match the order in the sorted list
-func (b *BoardSorter)updateCards(cards []Card) {
+func (b *BoardSorter) updateCards(cards []Card) {
 	for i, c := range cards {
 		err := b.Trello.updateCardPosition(c.Id, 1<<i)
 		if err != nil {

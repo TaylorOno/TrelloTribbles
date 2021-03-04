@@ -22,14 +22,14 @@ type Trello struct {
 }
 
 type List struct {
-	Id string `json:id`
+	Id string `json:"id"`
 }
 
 type Card struct {
-	Id        string   `json:id`
-	Name      string   `json:name`
-	Pos       float64  `json:pos`
-	IdMembers []string `json:idMembers`
+	Id        string   `json:"id"`
+	Name      string   `json:"name"`
+	Pos       float64  `json:"pos"`
+	IdMembers []string `json:"idMembers"`
 }
 
 func NewTrelloClient(client Client, apiKey string, apiToken string) *Trello {

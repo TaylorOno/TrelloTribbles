@@ -1,2 +1,5 @@
 .idea
 .env
+
+**/coverage.out
+go_board_sorter
